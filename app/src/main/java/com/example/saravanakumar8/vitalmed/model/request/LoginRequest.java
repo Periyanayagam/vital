@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed.Model.request;
+package com.example.saravanakumar8.vitalmed.model.request;
 
 /**
  * Created by perusu on 1/10/17.

@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,22 +11,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.saravanakumar8.vitalmed.Model.Datamodel;
+import com.example.saravanakumar8.vitalmed.activity.ColdCallsviewActivity;
+import com.example.saravanakumar8.vitalmed.model.Datamodel;
+import com.example.saravanakumar8.vitalmed.R;
 
 import java.util.ArrayList;
-
-import static com.example.saravanakumar8.vitalmed.BaseActivity.TAG;
 
 /**
  * Created by saravanakumar8 on 9/9/2017.
  */
 
-public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHolder> {
+public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapter.ViewHolder> {
 
     Context context;
     ArrayList<Datamodel> coldcall;
 
-    public ColdcallAdapter(Context context, ArrayList<Datamodel> coldcall) {
+    public FollowupCallAdapter(Context context, ArrayList<Datamodel> coldcall) {
         this.context = context;
         this.coldcall = coldcall;
 
@@ -36,25 +36,25 @@ public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.coldcall_list, parent, false);
+                .inflate(R.layout.followcall_list, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Log.d("Adapter", "onBindViewHolder: "+ coldcall.get(0).getStatus());
 
         holder.txt_hospitaname.setText(coldcall.get(position).getHospitalname());
         holder.txt_doctorname.setText(coldcall.get(position).getDoctorname());
         holder.txt_mobilename.setText(coldcall.get(position).getMobilename());
         holder.txt_date.setText(coldcall.get(position).getDate());
         holder.txt_status.setText(coldcall.get(position).getStatus());
-        Log.d(TAG, "onBindViewHolder: status"+ coldcall.get(position).getStatus());
-       // holder.img_success.setImageResource(coldcall.get(position).getImages());
 
-      //  Picasso.with(context).load(coldcall.get(position).getImages()).resize(240, 120).into(holder.img_success);
-
+      //  holder.img_success.setImageResource(coldcall.get(position).getImages());
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -76,10 +76,10 @@ public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHo
             txt_hospitaname = (TextView) itemView.findViewById(R.id.txt_hospitaname);
             txt_doctorname = (TextView) itemView.findViewById(R.id.txt_doctorname);
             txt_mobilename = (TextView) itemView.findViewById(R.id.txt_mobilename);
+            txt_attendername = (TextView) itemView.findViewById(R.id.txt_attendername);
             txt_date = (TextView) itemView.findViewById(R.id.txt_date);
             txt_status = (TextView) itemView.findViewById(R.id.txt_status);
-
-            Log.d(TAG, "ViewHolder: status"+ txt_status);
+            img_success = (ImageView) itemView.findViewById(R.id.img_success);
 
             linear_coldcalldetail = (LinearLayout) itemView.findViewById(R.id.linear_coldcalldetail);
 

@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.saravanakumar8.vitalmed.Helper.Pref;
-import com.example.saravanakumar8.vitalmed.Model.request.LoginRequest;
-import com.example.saravanakumar8.vitalmed.Model.response.LoginResponse;
+import com.example.saravanakumar8.vitalmed.helper.Pref;
+import com.example.saravanakumar8.vitalmed.model.response.LoginResponse;
+import com.example.saravanakumar8.vitalmed.R;
 import com.example.saravanakumar8.vitalmed.Rest.ApiClient;
 import com.example.saravanakumar8.vitalmed.Rest.ApiInterface;
 import com.example.saravanakumar8.vitalmed.Rest.ResponseListener;

@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,22 +11,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.saravanakumar8.vitalmed.Model.Datamodel;
+import com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel;
+import com.example.saravanakumar8.vitalmed.activity.ColdCallActivity;
+import com.example.saravanakumar8.vitalmed.activity.ColdCallsviewActivity;
+import com.example.saravanakumar8.vitalmed.R;
+import com.example.saravanakumar8.vitalmed.listener.MyRecyclerListener;
 
 import java.util.ArrayList;
 
-import static com.example.saravanakumar8.vitalmed.BaseActivity.TAG;
-
 /**
- * Created by saravanakumar8 on 9/11/2017.
+ * Created by saravanakumar8 on 9/9/2017.
  */
 
-public class ServicecallAdapter extends RecyclerView.Adapter<ServicecallAdapter.ViewHolder> {
+public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHolder> {
 
+    private static final String TAG = ColdcallAdapter.class.getSimpleName();
     Context context;
-    ArrayList<Datamodel> coldcall;
-
-    public ServicecallAdapter(Context context, ArrayList<Datamodel> coldcall) {
+    ArrayList<Coldmodel> coldcall;
+    MyRecyclerListener myRecyclerListener;
+    public ColdcallAdapter(Context context, ArrayList<Coldmodel> coldcall) {
         this.context = context;
         this.coldcall = coldcall;
 
@@ -36,29 +39,26 @@ public class ServicecallAdapter extends RecyclerView.Adapter<ServicecallAdapter.
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.servicecall_list, parent, false);
+                .inflate(R.layout.coldcall_list, parent, false);
+        myRecyclerListener = new ColdCallActivity();
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        Log.d(TAG, "onBindViewHolder: " + coldcall.size());
 
         holder.txt_hospitaname.setText(coldcall.get(position).getHospitalname());
         holder.txt_doctorname.setText(coldcall.get(position).getDoctorname());
         holder.txt_mobilename.setText(coldcall.get(position).getMobilename());
-        holder.txt_attendername.setText(coldcall.get(position).getAttendername());
         holder.txt_date.setText(coldcall.get(position).getDate());
         holder.txt_status.setText(coldcall.get(position).getStatus());
+        Log.d(TAG, "onBindViewHolder: status"+ coldcall.get(position).getStatus());
+       // holder.img_success.setImageResource(coldcall.get(position).getImages());
 
-        if (coldcall.get(position).getStatus().equals("NEW")) {
-            holder.img_success.setImageResource(R.drawable.success_icon);
-        } else if (coldcall.get(position).getStatus().equals("CLOSE")) {
-            holder.img_success.setImageResource(R.drawable.ic_close_black_24dp);
-        }
+      //  Picasso.with(context).load(coldcall.get(position).getImages()).resize(240, 120).into(holder.img_success);
+
     }
-
 
     @Override
     public int getItemCount() {
@@ -80,10 +80,10 @@ public class ServicecallAdapter extends RecyclerView.Adapter<ServicecallAdapter.
             txt_hospitaname = (TextView) itemView.findViewById(R.id.txt_hospitaname);
             txt_doctorname = (TextView) itemView.findViewById(R.id.txt_doctorname);
             txt_mobilename = (TextView) itemView.findViewById(R.id.txt_mobilename);
-            txt_attendername = (TextView) itemView.findViewById(R.id.txt_attendername);
             txt_date = (TextView) itemView.findViewById(R.id.txt_date);
             txt_status = (TextView) itemView.findViewById(R.id.txt_status);
-            img_success = (ImageView) itemView.findViewById(R.id.img_success);
+
+            Log.d(TAG, "ViewHolder: status"+ txt_status);
 
             linear_coldcalldetail = (LinearLayout) itemView.findViewById(R.id.linear_coldcalldetail);
 
@@ -92,8 +92,8 @@ public class ServicecallAdapter extends RecyclerView.Adapter<ServicecallAdapter.
                 @Override
                 public void onClick(View v) {
 
-                    Intent coldcallview = new Intent(context, ColdCallsviewActivity.class);
-                    context.startActivity(coldcallview);
+                    myRecyclerListener.onClick();
+
                 }
             });
 

@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed.Model.response;
+package com.example.saravanakumar8.vitalmed.model.response;
 
 /**
  * Awesome Pojo Generator

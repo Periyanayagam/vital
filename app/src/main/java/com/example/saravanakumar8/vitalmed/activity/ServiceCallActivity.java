@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -6,26 +6,28 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.saravanakumar8.vitalmed.Helper.Pref;
-import com.example.saravanakumar8.vitalmed.Model.Datamodel;
-import com.example.saravanakumar8.vitalmed.Response.cold.ColdResponse;
+import com.example.saravanakumar8.vitalmed.model.Datamodel;
+import com.example.saravanakumar8.vitalmed.R;
+import com.example.saravanakumar8.vitalmed.Response.service.ServiceResponse;
 import com.example.saravanakumar8.vitalmed.Rest.ApiClient;
 import com.example.saravanakumar8.vitalmed.Rest.ApiInterface;
 import com.example.saravanakumar8.vitalmed.Rest.ResponseListener;
 import com.example.saravanakumar8.vitalmed.Rest.RetroFitUtils;
+import com.example.saravanakumar8.vitalmed.adapter.ServicecallAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 
-public class ColdCallActivity extends BaseActivity implements ResponseListener {
+public class ServiceCallActivity extends BaseActivity implements ResponseListener {
 
-    private static final String TAG = ColdCallActivity.class.getSimpleName();
-    RecyclerView recycle_coldcall;
+    private static final String TAG = ServiceCallActivity.class.getSimpleName();
+    RecyclerView recycle_servicecall;
 
-    ColdcallAdapter coldcallAdapter;
+    ServicecallAdapter servicecallAdapter;
     private ProgressDialog mProgressDialog;
+
 
     // ArrayList<Datamodel> data;
 
@@ -43,23 +45,26 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cold_call);
-
-
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call localCall = apiInterface.initSync("7", "3");
-        //Call localCall = apiInterface.initSync(Pref.getUSERID(), Pref.getGROUPID());
-        RetroFitUtils.getInstance().retrofitEnqueue(localCall, this, 0);
-
-        recycle_coldcall = (RecyclerView) findViewById(R.id.recycle_coldcall);
-        recycle_coldcall.setHasFixedSize(true);
+        setContentView(R.layout.activity_service_call);
+        mProgressDialog = new ProgressDialog(this);
+        recycle_servicecall = (RecyclerView) findViewById(R.id.recycle_servicecall);
+        recycle_servicecall.setHasFixedSize(true);
 
         //Recyclerview Init
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recycle_coldcall.setLayoutManager(layoutManager);
+        recycle_servicecall.setLayoutManager(layoutManager);
+
+
+        mProgressDialog.setMessage("Please Wait");
+        mProgressDialog.show();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call localCall = apiInterface.initSync("7", "3");
+        //Call localCall = apiInterface.initSync(Pref.getUSERID(), Pref.getGROUPID());
+        RetroFitUtils.getInstance().retrofitEnqueue(localCall, this, 3);
 
 
     }
+
 
     @Override
     public void onFailure(Throwable paramThrowable, int paramInt) {
@@ -69,33 +74,38 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener {
     @Override
     public void onSuccess(String paramString, int paramInt) {
 
-
-        Log.d(TAG, "onSuccess: " + paramString);
+        mProgressDialog.dismiss();
 
         switch (paramInt) {
-            case 0:
-                ArrayList<Datamodel> android_version = new ArrayList<>();
+            case 3:
+
                 Gson gson = new Gson();
 
+                Log.d(TAG, "onSuccess: " + paramString);
 
-                ColdResponse syncResponse = (gson.fromJson(paramString, ColdResponse.class));
+                ServiceResponse serviceResponse = ((ServiceResponse) gson.fromJson(paramString, ServiceResponse.class));
+                Log.d(TAG, "onSuccess: MainActivity" + paramString);
 
-                for (int i = 0; i < syncResponse.getServiceList().size(); i++) {
+                ArrayList<Datamodel> syncResponse = new ArrayList<>();
+                Log.d(TAG, "onSuccess: " + serviceResponse.getServiceList().size());
 
-                    android_version.add(new Datamodel(syncResponse.getServiceList().get(i).getCustomer_name(),
-                            syncResponse.getServiceList().get(i).getEng_name(),
-                            syncResponse.getServiceList().get(i).getEquip_name(),
-                            syncResponse.getServiceList().get(i).getCreated_dt(),
-                            syncResponse.getServiceList().get(i).getStatus()
+                for (int i = 0; i < serviceResponse.getServiceList().size(); i++) {
+
+                    syncResponse.add(new Datamodel(serviceResponse.getServiceList().get(i).getCustomer_name(),
+                            serviceResponse.getServiceList().get(i).getEng_name(),
+                            serviceResponse.getServiceList().get(i).getContact_no(),
+                            serviceResponse.getServiceList().get(i).getCreated_dt(),
+                            serviceResponse.getServiceList().get(i).getStatus()
                     ));
                 }
 
-
-                coldcallAdapter = new ColdcallAdapter(ColdCallActivity.this, android_version);
-                recycle_coldcall.setAdapter(coldcallAdapter);
+                servicecallAdapter = new ServicecallAdapter(ServiceCallActivity.this, syncResponse);
+                recycle_servicecall.setAdapter(servicecallAdapter);
 
                 break;
         }
+
+
     }
 
     @Override

@@ -1,34 +1,34 @@
-package com.example.saravanakumar8.vitalmed.Model;
+package com.example.saravanakumar8.vitalmed.activeandroid;
+
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
 /**
- * Created by saravanakumar8 on 9/9/2017.
+ * Created by Intel on 04-10-2017.
  */
 
-public class Datamodel {
+//This is our table name
+@Table(name = "Coldmodel")
+public class Coldmodel extends Model {
 
-
+    @Column(name = "hospitalname")
     String hospitalname;
+    @Column(name = "doctorname")
     String doctorname;
+    @Column(name = "mobilename")
     String mobilename;
-    String attendername;
+    @Column(name = "date")
     String date;
+    @Column(name = "status")
     String status;
 
-    int images;
-
-
-    public Datamodel() {
-
-    }
-
-    public Datamodel(String hospitalname, String doctorname, String mobilename, String date, String status) {
+    public Coldmodel(String hospitalname, String doctorname, String mobilename, String date, String status) {
         this.hospitalname = hospitalname;
         this.doctorname = doctorname;
         this.mobilename = mobilename;
-        this.attendername = attendername;
         this.date = date;
         this.status = status;
-        this.images = images;
     }
 
     public String getHospitalname() {
@@ -55,16 +55,6 @@ public class Datamodel {
         this.mobilename = mobilename;
     }
 
-
-
-    public String getAttendername() {
-        return attendername;
-    }
-
-    public void setAttendername(String attendername) {
-        this.attendername = attendername;
-    }
-
     public String getDate() {
         return date;
     }
@@ -80,14 +70,4 @@ public class Datamodel {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
-    public int getImages() {
-        return images;
-    }
-
-    public void setImages(int images) {
-        this.images = images;
-    }
-
 }

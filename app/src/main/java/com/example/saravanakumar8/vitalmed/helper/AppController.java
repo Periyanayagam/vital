@@ -1,11 +1,10 @@
-package com.example.saravanakumar8.vitalmed.Helper;
+package com.example.saravanakumar8.vitalmed.helper;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.saravanakumar8.vitalmed.Rest.ApiClient;
-import com.example.saravanakumar8.vitalmed.Rest.ApiInterface;
+import com.activeandroid.ActiveAndroid;
 
 /**
  * Created by saravanakumar8 on 9/12/2017.
@@ -31,6 +30,7 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ActiveAndroid.initialize(this);
         instance = this;
         sharedpreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 

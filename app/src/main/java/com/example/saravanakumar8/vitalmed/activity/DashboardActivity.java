@@ -1,28 +1,40 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.example.saravanakumar8.vitalmed.Helper.Pref;
+import com.example.saravanakumar8.vitalmed.helper.Pref;
+import com.example.saravanakumar8.vitalmed.R;
 
 public class DashboardActivity extends BaseActivity {
 
     LinearLayout linear_sales, linear_service;
     ImageView img_logout;
+    TextView txtFinalSync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        txtFinalSync = (TextView) findViewById(R.id.txtFinalSync);
 
         linear_sales = (LinearLayout) findViewById(R.id.linear_sales);
         linear_service = (LinearLayout) findViewById(R.id.linear_service);
         img_logout = (ImageView) findViewById(R.id.img_logout);
+
+        txtFinalSync.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
 
         img_logout.setOnClickListener(
                 new View.OnClickListener() {

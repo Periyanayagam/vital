@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,9 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.saravanakumar8.vitalmed.R;
 
+import java.util.List;
 
 
 public class CustomSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {

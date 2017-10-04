@@ -3,32 +3,40 @@
     package="com.example.saravanakumar8.vitalmed">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <meta-data android:name="AA_DB_NAME" android:value="MyDatabase.db" />
+    <meta-data android:name="AA_DB_VERSION" android:value="5" />
+
+    <meta-data
+        android:name="AA_MODELS"
+        android:value="com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel" />
 
     <application
-        android:name=".Helper.AppController"
+        android:name=".helper.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".SalesDashboardActivity" />
-        <activity android:name=".ColdCallActivity" />
-        <activity android:name=".ColdCallsviewActivity" />
-        <activity android:name=".FollowupCallActivity" />
-        <activity android:name=".ProjectedCallActivity" />
-        <activity android:name=".ServiceCallActivity" />
-        <activity android:name=".FollowupCallsviewActivity" />
-        <activity android:name=".ProjectedCallsviewActivity" />
-        <activity android:name=".ServiceCallsviewActivity"></activity>
+        <activity android:name=".activity.DashboardActivity" />
+        <activity android:name=".activity.SalesDashboardActivity" />
+        <activity android:name=".activity.ColdCallActivity" />
+        <activity android:name=".activity.ColdCallsviewActivity" />
+        <activity android:name=".activity.FollowupCallActivity" />
+        <activity android:name=".activity.ProjectedCallActivity" />
+        <activity android:name=".activity.ServiceCallActivity" />
+        <activity android:name=".activity.FollowupCallsviewActivity" />
+        <activity android:name=".activity.ProjectedCallsviewActivity" />
+        <activity android:name=".activity.ServiceCallsviewActivity"></activity>
     </application>
 
 </manifest>
