@@ -1,10 +1,12 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.example.saravanakumar8.vitalmed.R;
 
 public class SalesDashboardActivity extends AppCompatActivity {
 

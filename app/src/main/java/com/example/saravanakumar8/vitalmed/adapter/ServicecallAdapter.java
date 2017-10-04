@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +11,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.saravanakumar8.vitalmed.Model.Datamodel;
+import com.example.saravanakumar8.vitalmed.model.Datamodel;
+import com.example.saravanakumar8.vitalmed.R;
+import com.example.saravanakumar8.vitalmed.activity.ColdCallsviewActivity;
 
 import java.util.ArrayList;
 
-import static com.example.saravanakumar8.vitalmed.BaseActivity.TAG;
 
 /**
  * Created by saravanakumar8 on 9/11/2017.
@@ -23,6 +24,7 @@ import static com.example.saravanakumar8.vitalmed.BaseActivity.TAG;
 
 public class ServicecallAdapter extends RecyclerView.Adapter<ServicecallAdapter.ViewHolder> {
 
+    private static final String TAG = ServicecallAdapter.class.getSimpleName();
     Context context;
     ArrayList<Datamodel> coldcall;
 

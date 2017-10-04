@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed.Helper;
+package com.example.saravanakumar8.vitalmed.helper;
 
 import android.content.SharedPreferences;
 

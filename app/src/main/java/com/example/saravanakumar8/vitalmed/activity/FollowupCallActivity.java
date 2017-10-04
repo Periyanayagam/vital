@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -7,13 +7,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.saravanakumar8.vitalmed.Helper.Pref;
-import com.example.saravanakumar8.vitalmed.Model.Datamodel;
+import com.example.saravanakumar8.vitalmed.model.Datamodel;
+import com.example.saravanakumar8.vitalmed.R;
 import com.example.saravanakumar8.vitalmed.Response.follow.FollowResponse;
 import com.example.saravanakumar8.vitalmed.Rest.ApiClient;
 import com.example.saravanakumar8.vitalmed.Rest.ApiInterface;
 import com.example.saravanakumar8.vitalmed.Rest.ResponseListener;
 import com.example.saravanakumar8.vitalmed.Rest.RetroFitUtils;
+import com.example.saravanakumar8.vitalmed.adapter.FollowupCallAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

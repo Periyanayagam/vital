@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed.Model;
+package com.example.saravanakumar8.vitalmed.model;
 
 /**
  * Created by saravanakumar8 on 9/9/2017.

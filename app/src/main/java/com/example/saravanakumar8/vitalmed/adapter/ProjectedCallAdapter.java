@@ -1,4 +1,4 @@
-package com.example.saravanakumar8.vitalmed;
+package com.example.saravanakumar8.vitalmed.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.saravanakumar8.vitalmed.Model.Datamodel;
+import com.example.saravanakumar8.vitalmed.model.Datamodel;
+import com.example.saravanakumar8.vitalmed.R;
+import com.example.saravanakumar8.vitalmed.activity.ColdCallsviewActivity;
 
 import java.util.ArrayList;
 
@@ -18,7 +20,7 @@ import java.util.ArrayList;
  * Created by saravanakumar8 on 9/9/2017.
  */
 
-class ProjectedCallAdapter extends RecyclerView.Adapter<ProjectedCallAdapter.ViewHolder> {
+public class ProjectedCallAdapter extends RecyclerView.Adapter<ProjectedCallAdapter.ViewHolder> {
 
     Context context;
     ArrayList<Datamodel> coldcall;
