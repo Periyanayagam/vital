@@ -1,6 +1,5 @@
 package com.example.saravanakumar8.vitalmed.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -86,6 +85,7 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
                 Log.d(TAG, "onSuccess: Deleted");
 
+
                 Gson gson = new Gson();
 
                 ColdResponse syncResponse = (gson.fromJson(paramString, ColdResponse.class));
@@ -101,7 +101,6 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
                     );
                     coldmodel.save();
                     coldCallList.add(coldmodel);
-
                 }
 
                 coldcallAdapter = new ColdcallAdapter(ColdCallActivity.this, coldCallList);
@@ -119,16 +118,16 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
     }
 
     private void doGetLatestData() {
-        Log.d(TAG, "doGetLatestData: ");
 
         coldCallList = new ArrayList<>();
 
         List<Coldmodel> syncResponse = new Select()
                 .from(Coldmodel.class)
+                .orderBy("Name ASC")
                 .execute();
 
         for (int i = 0; i < syncResponse.size(); i++) {
-            Log.d(TAG, "doGetLatestData: "+ syncResponse.get(i).getHospitalname());
+
             coldCallList.add(new Coldmodel(syncResponse.get(i).getHospitalname(),
                     syncResponse.get(i).getDoctorname(),
                     syncResponse.get(i).getMobilename(),
@@ -137,7 +136,7 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
             ));
 
         }
-        coldcallAdapter.refreshData(coldCallList);
+        coldcallAdapter.refresh(coldCallList);
 
         Log.d(TAG, "doGetLatestData: Saved new Data");
     }
@@ -147,35 +146,21 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
     }
 
-    @Override
-    public void onClick(ArrayList<Coldmodel> crapList, int i) {
-        Log.d(TAG, "onClick: ");
-
-
-        ArrayList<String> myList = new ArrayList<>();
-
-        myList.add(crapList.get(i).getHospitalname());
-        myList.add(crapList.get(i).getDoctorname());
-        myList.add(crapList.get(i).getMobilename());
-        myList.add(crapList.get(i).getDate());
-        myList.add(crapList.get(i).getStatus());
-        myList.add(String.valueOf(crapList.get(i).getId()));
-
-        Intent intent = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
-        intent.putStringArrayListExtra("detail", myList);
-        startActivityForResult(intent, 1);
-
-    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult: ");
         if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 if (data.getBooleanExtra("isAdded", false)) {
-                    Log.d(TAG, "onActivityResult: isAdded");
                     doGetLatestData();
                 }
             }
         }
+    }
+
+    @Override
+    public void onClick(ArrayList<Coldmodel> myList, int position) {
+        Log.d(TAG, "onClick: ");
+        Intent i = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
+        startActivityForResult(i, 1);
     }
 }
