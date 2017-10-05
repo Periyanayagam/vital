@@ -1,5 +1,6 @@
 package com.example.saravanakumar8.vitalmed.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -90,7 +91,6 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
                 ColdResponse syncResponse = (gson.fromJson(paramString, ColdResponse.class));
 
-
                 for (int i = 0; i < syncResponse.getServiceList().size(); i++) {
 
                     Coldmodel coldmodel = new Coldmodel(syncResponse.getServiceList().get(i).getCustomer_name(),
@@ -103,11 +103,20 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
                     coldCallList.add(coldmodel);
                 }
 
-                coldcallAdapter = new ColdcallAdapter(ColdCallActivity.this, coldCallList);
-                recycle_coldcall.setAdapter(coldcallAdapter);
-
+                setAdapter(coldCallList);
                 break;
         }
+    }
+
+    private void setAdapter(List<Coldmodel> coldCallList) {
+
+        if (coldcallAdapter == null) {
+            coldcallAdapter = new ColdcallAdapter(ColdCallActivity.this, coldCallList);
+            recycle_coldcall.setAdapter(coldcallAdapter);
+        } else {
+            coldcallAdapter.refresh(coldCallList);
+        }
+
     }
 
 
@@ -117,26 +126,14 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
     }
 
-    private void doGetLatestData() {
+    private void doGetLatestData(int postion) {
 
-        coldCallList = new ArrayList<>();
-
-        List<Coldmodel> syncResponse = new Select()
+        List<Coldmodel> abcList = new Select()
+                .all()
                 .from(Coldmodel.class)
-                .orderBy("Name ASC")
                 .execute();
 
-        for (int i = 0; i < syncResponse.size(); i++) {
-
-            coldCallList.add(new Coldmodel(syncResponse.get(i).getHospitalname(),
-                    syncResponse.get(i).getDoctorname(),
-                    syncResponse.get(i).getMobilename(),
-                    syncResponse.get(i).getDate(),
-                    syncResponse.get(i).getStatus()
-            ));
-
-        }
-        coldcallAdapter.refresh(coldCallList);
+        setAdapter(abcList);
 
         Log.d(TAG, "doGetLatestData: Saved new Data");
     }
@@ -147,20 +144,34 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
     }
 
 
+    @Override
+    public void onClick(List<Coldmodel> myList, int i, String Id) {
+
+        ArrayList<String> crapList = new ArrayList<>();
+
+        crapList.add(myList.get(i).getHospitalname().toString());
+        crapList.add(myList.get(i).getDoctorname().toString());
+        crapList.add(myList.get(i).getMobilename().toString());
+        crapList.add(myList.get(i).getDate().toString());
+        crapList.add(myList.get(i).getStatus().toString());
+        crapList.add(String.valueOf(Id));
+
+
+        Intent intent = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
+        intent.putStringArrayListExtra("data", crapList);
+        startActivityForResult(intent, 1);
+    }
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 if (data.getBooleanExtra("isAdded", false)) {
-                    doGetLatestData();
+                    doGetLatestData(data.getIntExtra("postion", 0));
                 }
             }
         }
     }
 
-    @Override
-    public void onClick(ArrayList<Coldmodel> myList, int position) {
-        Log.d(TAG, "onClick: ");
-        Intent i = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
-        startActivityForResult(i, 1);
-    }
 }

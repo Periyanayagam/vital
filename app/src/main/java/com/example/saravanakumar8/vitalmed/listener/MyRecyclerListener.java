@@ -3,6 +3,7 @@ package com.example.saravanakumar8.vitalmed.listener;
 import com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Intel on 04-10-2017.
@@ -10,5 +11,5 @@ import java.util.ArrayList;
 
 public interface MyRecyclerListener {
 
-    void onClick(ArrayList<Coldmodel> myList, int position);
+    void onClick(List<Coldmodel> myList, int i, String Id);
 }
