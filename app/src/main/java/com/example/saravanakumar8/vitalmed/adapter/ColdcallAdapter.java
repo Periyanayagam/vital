@@ -1,7 +1,6 @@
 package com.example.saravanakumar8.vitalmed.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.saravanakumar8.vitalmed.R;
 import com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel;
-import com.example.saravanakumar8.vitalmed.activity.ColdCallsviewActivity;
+import com.example.saravanakumar8.vitalmed.activity.ColdCallActivity;
 
 import java.util.ArrayList;
 
@@ -36,14 +35,14 @@ public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.followcall_list, parent, false);
+                .inflate(R.layout.coldcall_list, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Log.d("Adapter", "onBindViewHolder: "+ coldcall.get(0).getStatus());
+        Log.d("Adapter", "onBindViewHolder: " + coldcall.get(0).getStatus());
 
         holder.txt_hospitaname.setText(coldcall.get(position).getHospitalname());
         holder.txt_doctorname.setText(coldcall.get(position).getDoctorname());
@@ -51,9 +50,8 @@ public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHo
         holder.txt_date.setText(coldcall.get(position).getDate());
         holder.txt_status.setText(coldcall.get(position).getStatus());
 
-      //  holder.img_success.setImageResource(coldcall.get(position).getImages());
+        //  holder.img_success.setImageResource(coldcall.get(position).getImages());
     }
-
 
 
     @Override
@@ -69,7 +67,7 @@ public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView txt_hospitaname, txt_doctorname, txt_mobilename, txt_attendername, txt_date, txt_status;
-        LinearLayout linear_coldcalldetail;
+        LinearLayout linear_coldcalldetail,rootLay;
 
 
         ImageView img_success;
@@ -87,18 +85,25 @@ public class ColdcallAdapter extends RecyclerView.Adapter<ColdcallAdapter.ViewHo
             img_success = (ImageView) itemView.findViewById(R.id.img_success);
 
             linear_coldcalldetail = (LinearLayout) itemView.findViewById(R.id.linear_coldcalldetail);
+            rootLay = (LinearLayout) itemView.findViewById(R.id.rootLay);
 
+            rootLay.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //coldcall.get()
 
-            linear_coldcalldetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                            coldcall.get(getAdapterPosition()).setHospitalname(txt_hospitaname.getText().toString().trim());
+                            coldcall.get(getAdapterPosition()).setDoctorname(txt_doctorname.getText().toString().trim());
+                            coldcall.get(getAdapterPosition()).setMobilename(txt_mobilename.getText().toString().trim());
+                            coldcall.get(getAdapterPosition()).setStatus(txt_status.getText().toString().trim());
+                            coldcall.get(getAdapterPosition()).setDate(txt_date.getText().toString().trim());
 
-                    //coldcall.get()
+                            ((ColdCallActivity) context).onClick(coldcall, getAdapterPosition());
+                        }
+                    }
+            );
 
-                    Intent coldcallview = new Intent(context,ColdCallsviewActivity.class);
-                    context.startActivity(coldcallview);
-                }
-            });
 
 
         }

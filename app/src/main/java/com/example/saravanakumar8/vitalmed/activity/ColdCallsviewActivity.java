@@ -34,7 +34,7 @@ public class ColdCallsviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coldcallsview);
 //someData
         if (getIntent().getExtras() != null) {
-            crapList = getIntent().getStringArrayListExtra("detail");
+            crapList = getIntent().getStringArrayListExtra("data");
         }
 
         select_status = (Spinner) findViewById(R.id.select_status);
@@ -118,7 +118,7 @@ public class ColdCallsviewActivity extends AppCompatActivity {
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("isAdded", true);
-        setResult(Activity.RESULT_OK,returnIntent);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
 
     }

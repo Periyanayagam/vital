@@ -1,5 +1,6 @@
 package com.example.saravanakumar8.vitalmed.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -123,7 +124,6 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
         List<Coldmodel> syncResponse = new Select()
                 .from(Coldmodel.class)
-                .orderBy("Name ASC")
                 .execute();
 
         for (int i = 0; i < syncResponse.size(); i++) {
@@ -147,9 +147,30 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
     }
 
 
+    @Override
+    public void onClick(ArrayList<Coldmodel> myList, int i) {
+
+
+        ArrayList<String> crapList = new ArrayList<>();
+
+        crapList.add(myList.get(i).getHospitalname().toString());
+        crapList.add(myList.get(i).getDoctorname().toString());
+        crapList.add(myList.get(i).getMobilename().toString());
+        crapList.add(myList.get(i).getDate().toString());
+        crapList.add(myList.get(i).getStatus().toString());
+        crapList.add(myList.get(i).getId().toString());
+
+        Log.d(TAG, "onClick: ");
+        Intent intent = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
+        intent.putStringArrayListExtra("data",crapList);
+        startActivityForResult(intent, 1);
+    }
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 if (data.getBooleanExtra("isAdded", false)) {
                     doGetLatestData();
                 }
@@ -157,10 +178,4 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
         }
     }
 
-    @Override
-    public void onClick(ArrayList<Coldmodel> myList, int position) {
-        Log.d(TAG, "onClick: ");
-        Intent i = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
-        startActivityForResult(i, 1);
-    }
 }
