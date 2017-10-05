@@ -1,6 +1,5 @@
 package com.example.saravanakumar8.vitalmed.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,22 +28,24 @@ import retrofit2.Call;
 public class ColdCallActivity extends BaseActivity implements ResponseListener, MyRecyclerListener {
 
     private static final String TAG = ColdCallActivity.class.getSimpleName();
+    RecyclerView recycle_coldcall;
+
+    ColdcallAdapter coldcallAdapter;
+    private ProgressDialog mProgressDialog;
+    ArrayList<Coldmodel> coldCallList;
+
+    // ArrayList<Datamodel> data;
+
     private final String[] hospitalname = {"Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd",
             "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd"};
     private final String[] doctoname = {"1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5"};
     private final String[] mobilename = {"MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5",
             "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5"};
     private final String[] attendername = {"Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish"};
-
-    // ArrayList<Datamodel> data;
     private final String[] date = {"207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31"};
     private final String[] status = {"Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1"};
     private final int[] images = {R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon,
             R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon};
-    RecyclerView recycle_coldcall;
-    ColdcallAdapter coldcallAdapter;
-    ArrayList<Coldmodel> coldCallList;
-    private ProgressDialog mProgressDialog;
     private boolean refreshAdapter = false;
 
     @Override
@@ -86,6 +87,7 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
                 Log.d(TAG, "onSuccess: Deleted");
 
+
                 Gson gson = new Gson();
 
                 ColdResponse syncResponse = (gson.fromJson(paramString, ColdResponse.class));
@@ -101,7 +103,6 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
                     );
                     coldmodel.save();
                     coldCallList.add(coldmodel);
-
                 }
 
                 coldcallAdapter = new ColdcallAdapter(ColdCallActivity.this, coldCallList);
@@ -119,16 +120,16 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
     }
 
     private void doGetLatestData() {
-        Log.d(TAG, "doGetLatestData: ");
 
         coldCallList = new ArrayList<>();
 
         List<Coldmodel> syncResponse = new Select()
                 .from(Coldmodel.class)
+                .orderBy("Name ASC")
                 .execute();
 
         for (int i = 0; i < syncResponse.size(); i++) {
-            Log.d(TAG, "doGetLatestData: "+ syncResponse.get(i).getHospitalname());
+
             coldCallList.add(new Coldmodel(syncResponse.get(i).getHospitalname(),
                     syncResponse.get(i).getDoctorname(),
                     syncResponse.get(i).getMobilename(),
@@ -137,7 +138,7 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
             ));
 
         }
-        coldcallAdapter.refreshData(coldCallList);
+        coldcallAdapter.notifyDataSetChanged();
 
         Log.d(TAG, "doGetLatestData: Saved new Data");
     }
@@ -148,31 +149,17 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
     }
 
     @Override
-    public void onClick(ArrayList<Coldmodel> crapList, int i) {
+    public void onClick() {
         Log.d(TAG, "onClick: ");
-
-
-        ArrayList<String> myList = new ArrayList<>();
-
-        myList.add(crapList.get(i).getHospitalname());
-        myList.add(crapList.get(i).getDoctorname());
-        myList.add(crapList.get(i).getMobilename());
-        myList.add(crapList.get(i).getDate());
-        myList.add(crapList.get(i).getStatus());
-        myList.add(String.valueOf(crapList.get(i).getId()));
-
-        Intent intent = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
-        intent.putStringArrayListExtra("detail", myList);
-        startActivityForResult(intent, 1);
-
+        Intent i = new Intent(ColdCallActivity.this, ColdCallsviewActivity.class);
+        startActivityForResult(i, 1);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult: ");
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 if (data.getBooleanExtra("isAdded", false)) {
-                    Log.d(TAG, "onActivityResult: isAdded");
                     doGetLatestData();
                 }
             }
