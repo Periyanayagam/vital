@@ -32,7 +32,7 @@ public class ColdCallsviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coldcallsview);
-
+//someData
         if (getIntent().getExtras() != null) {
             crapList = getIntent().getStringArrayListExtra("detail");
         }
