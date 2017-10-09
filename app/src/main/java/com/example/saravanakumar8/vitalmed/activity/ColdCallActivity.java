@@ -76,7 +76,7 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
     @Override
     public void onSuccess(String paramString, int paramInt) {
 
-
+//asbcv
         Log.d(TAG, "onSuccess: " + paramString);
 
         switch (paramInt) {
