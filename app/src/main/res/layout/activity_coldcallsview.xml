@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1bbc9b"
+    android:background="#76d6c3"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:cardBackgroundColor="#FFF">
@@ -22,12 +22,19 @@
 
 
     <LinearLayout
+        android:id="@+id/layCenter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/cardView"
         android:background="#1bbc9b"
         android:orientation="vertical">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
         <LinearLayout
+            android:id="@+id/topLay"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -45,7 +52,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Name"
+                    android:text="Request ID"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -56,7 +63,7 @@
                     android:background="@drawable/contactview_edit">
 
                     <EditText
-                        android:id="@+id/edt_name"
+                        android:id="@+id/etReqId"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
@@ -80,7 +87,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Serial No"
+                    android:text="Customer Name"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -92,7 +99,7 @@
                     android:background="@drawable/contactview_edit">
 
                     <EditText
-                        android:id="@+id/edt_serialno"
+                        android:id="@+id/etCustName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
@@ -119,7 +126,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Eqp Name"
+                    android:text="Contact Number"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -130,14 +137,13 @@
                     android:background="@drawable/contactview_edit">
 
                     <EditText
-                        android:id="@+id/edt_eqpname"
+                        android:id="@+id/etMobile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:inputType="text"
+                        android:inputType="phone"
                         android:paddingLeft="20dp"
                         android:singleLine="true"
-                        android:text="MULTIPHOS 12"
                         android:textColor="#005a5b" />
 
 
@@ -168,7 +174,7 @@
                     android:background="@drawable/contactview_edit">
 
                     <EditText
-                        android:id="@+id/edt_eidnum"
+                        android:id="@+id/etEid"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
@@ -205,7 +211,7 @@
                     android:background="@drawable/contactview_edit">
 
                     <EditText
-                        android:id="@+id/edt_contract"
+                        android:id="@+id/etContract"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
@@ -231,7 +237,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Problem"
+                    android:text="SR Type"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -242,7 +248,7 @@
                     android:background="@drawable/contactview_edit">
 
                     <EditText
-                        android:id="@+id/edt_problem"
+                        android:id="@+id/etSrType"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
@@ -269,6 +275,41 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Engineer Name"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/contactview_edit">
+
+                    <EditText
+                        android:id="@+id/etEngName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:inputType="text"
+                        android:paddingLeft="20dp"
+                        android:singleLine="true"
+                        android:textColor="#005a5b" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Status"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -278,22 +319,144 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/contactview_edit">
 
-                    <Spinner
-                        android:id="@+id/select_status"
+
+                    <EditText
+                        android:id="@+id/etStatus"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:spinnerMode="dropdown">
+                        android:inputType="text"
+                        android:paddingLeft="20dp"
+                        android:singleLine="true"
+                        android:textColor="#005a5b" />
 
-
-                    </Spinner>
 
                 </LinearLayout>
 
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Problem"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/contactview_edit">
+
+
+                    <EditText
+                        android:id="@+id/etProblem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:inputType="text"
+                        android:paddingLeft="20dp"
+                        android:singleLine="true"
+                        android:textColor="#005a5b" />
+
+
+
+            </LinearLayout>
+
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="EQUIP Name"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="220dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/contactview_edit">
+
+                <EditText
+                    android:id="@+id/etequiEid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true"
+                    android:text="664500124544405"
+                    android:textColor="#005a5b" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="EQUIP S.No"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="220dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/contactview_edit">
+
+                <EditText
+                    android:id="@+id/etEquipSno"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true"
+                    android:text="664500124544405"
+                    android:textColor="#005a5b" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/chkBox"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layCenter"
+            android:text="Follow up needed"
+            android:theme="@style/WhiteCheck" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -351,4 +514,11 @@
 
     </LinearLayout>
 
-</LinearLayout>
+
+</ScrollView>
+
+
+    </LinearLayout>
+
+
+    </RelativeLayout>

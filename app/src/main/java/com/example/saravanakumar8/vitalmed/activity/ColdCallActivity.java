@@ -1,7 +1,6 @@
 package com.example.saravanakumar8.vitalmed.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,23 +28,10 @@ import retrofit2.Call;
 public class ColdCallActivity extends BaseActivity implements ResponseListener, MyRecyclerListener {
 
     private static final String TAG = ColdCallActivity.class.getSimpleName();
-    private final String[] hospitalname = {"Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd",
-            "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd", "Saravana Hospitals Pvt ltd"};
-    private final String[] doctoname = {"1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5", "1.5"};
-    private final String[] mobilename = {"MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5",
-            "MULTIMOBIL 2.5", "MULTIMOBIL 2.5", "MULTIMOBIL 2.5"};
-    private final String[] attendername = {"Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish", "Sathish"};
 
-    // ArrayList<Datamodel> data;
-    private final String[] date = {"207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31", "207-03-31"};
-    private final String[] status = {"Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1", "Status1"};
-    private final int[] images = {R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon,
-            R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon, R.drawable.success_icon};
     RecyclerView recycle_coldcall;
     ColdcallAdapter coldcallAdapter;
     ArrayList<Coldmodel> coldCallList;
-    private ProgressDialog mProgressDialog;
-    private boolean refreshAdapter = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +75,24 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
                 Gson gson = new Gson();
 
-                ColdResponse syncResponse = (gson.fromJson(paramString, ColdResponse.class));
+                ColdResponse coldResponse = (gson.fromJson(paramString, ColdResponse.class));
 
-                for (int i = 0; i < syncResponse.getServiceList().size(); i++) {
+                for (int i = 0; i < coldResponse.getServiceList().size(); i++) {
 
-                    Coldmodel coldmodel = new Coldmodel(syncResponse.getServiceList().get(i).getCustomer_name(),
-                            syncResponse.getServiceList().get(i).getEng_name(),
-                            syncResponse.getServiceList().get(i).getEquip_name(),
-                            syncResponse.getServiceList().get(i).getCreated_dt(),
-                            syncResponse.getServiceList().get(i).getStatus()
+                    Coldmodel coldmodel = new Coldmodel(
+                            coldResponse.getServiceList().get(i).getRequest_id(),
+                            coldResponse.getServiceList().get(i).getCustomer_name(),
+                            coldResponse.getServiceList().get(i).getContact_no(),
+                            coldResponse.getServiceList().get(i).getEid(),
+                            coldResponse.getServiceList().get(i).getEquip_name(),
+                            coldResponse.getServiceList().get(i).getEquip_sl_no(),
+                            coldResponse.getServiceList().get(i).getContract_type(),
+                            coldResponse.getServiceList().get(i).getSr_type(),
+                            coldResponse.getServiceList().get(i).getEng_name(),
+                            coldResponse.getServiceList().get(i).getStatus(),
+                            coldResponse.getServiceList().get(i).getProblem(),
+                            coldResponse.getServiceList().get(i).getCreated_dt(),
+                            coldResponse.getServiceList().get(i).getGroupID()
                     );
                     coldmodel.save();
                     coldCallList.add(coldmodel);
@@ -149,11 +144,17 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
         ArrayList<String> crapList = new ArrayList<>();
 
-        crapList.add(myList.get(i).getHospitalname().toString());
-        crapList.add(myList.get(i).getDoctorname().toString());
-        crapList.add(myList.get(i).getMobilename().toString());
-        crapList.add(myList.get(i).getDate().toString());
+        crapList.add(myList.get(i).getRequest_id().toString());
+        crapList.add(myList.get(i).getCustomer_name().toString());
+        crapList.add(myList.get(i).getContact_no().toString());
+        crapList.add(myList.get(i).getEid().toString());
+        crapList.add(myList.get(i).getEquip_name().toString());
+        crapList.add(myList.get(i).getEquip_sl_no().toString());
+        crapList.add(myList.get(i).getContract_type().toString());
+        crapList.add(myList.get(i).getSr_type().toString());
+        crapList.add(myList.get(i).getEng_name().toString());
         crapList.add(myList.get(i).getStatus().toString());
+        crapList.add(myList.get(i).getProblem().toString());
         crapList.add(String.valueOf(Id));
 
 

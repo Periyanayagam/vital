@@ -1,7 +1,6 @@
 package com.example.saravanakumar8.vitalmed.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.saravanakumar8.vitalmed.activity.ColdCallsviewActivity;
-import com.example.saravanakumar8.vitalmed.model.Datamodel;
 import com.example.saravanakumar8.vitalmed.R;
+import com.example.saravanakumar8.vitalmed.model.Datamodel;
 
 import java.util.ArrayList;
 
@@ -73,12 +71,12 @@ public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapte
             super(itemView);
 
 
-            txt_hospitaname = (TextView) itemView.findViewById(R.id.txt_hospitaname);
-            txt_doctorname = (TextView) itemView.findViewById(R.id.txt_doctorname);
-            txt_mobilename = (TextView) itemView.findViewById(R.id.txt_mobilename);
-            txt_attendername = (TextView) itemView.findViewById(R.id.txt_attendername);
-            txt_date = (TextView) itemView.findViewById(R.id.txt_date);
-            txt_status = (TextView) itemView.findViewById(R.id.txt_status);
+            txt_hospitaname = (TextView) itemView.findViewById(R.id.txtName);
+            txt_doctorname = (TextView) itemView.findViewById(R.id.txtType);
+            txt_mobilename = (TextView) itemView.findViewById(R.id.txtProblem);
+            txt_attendername = (TextView) itemView.findViewById(R.id.txtEngName);
+            txt_date = (TextView) itemView.findViewById(R.id.txtDate);
+            txt_status = (TextView) itemView.findViewById(R.id.txtStatus);
             img_success = (ImageView) itemView.findViewById(R.id.img_success);
 
             linear_coldcalldetail = (LinearLayout) itemView.findViewById(R.id.linear_coldcalldetail);
@@ -88,8 +86,8 @@ public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapte
                 @Override
                 public void onClick(View v) {
 
-                    Intent coldcallview = new Intent(context,ColdCallsviewActivity.class);
-                    context.startActivity(coldcallview);
+                  /*  Intent coldcallview = new Intent(context,ColdCallsviewActivity.class);
+                    context.startActivity(coldcallview);*/
                 }
             });
 

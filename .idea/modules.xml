@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Vitalmed.iml" filepath="$PROJECT_DIR$/Vitalmed.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vital.iml" filepath="$PROJECT_DIR$/vital.iml" />
       <module fileurl="file://$PROJECT_DIR$/vital.iml" filepath="$PROJECT_DIR$/vital.iml" />
     </modules>
   </component>

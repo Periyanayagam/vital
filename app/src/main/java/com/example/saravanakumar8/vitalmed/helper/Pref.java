@@ -1,6 +1,7 @@
 package com.example.saravanakumar8.vitalmed.helper;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by saravanakumar8 on 9/12/2017.
@@ -14,6 +15,7 @@ public class Pref {
     private static final String PRE_IMAGE = "image";
     private static final String PRE_ACCOUNT_USERNAME = "account_username";
     private static final String USERNAME = "username";
+    private static final String ADAPT = "adapt";
     private static final String PASSWORD = "password";
     private static final String USERID = "userId";
     private static final String GROUPID = "groupId";
@@ -78,6 +80,12 @@ public class Pref {
 
     }
 
+    public static String getAdapt() {
+
+        return preferences.getString(ADAPT, null);
+
+    }
+
 
     static String getfirbasetoken() {
 
@@ -113,6 +121,13 @@ public class Pref {
     public static void clearlogin(){
         editor = preferences.edit();
         editor.clear();
+        editor.commit();
+    }
+
+    public static void saveAdaptPosition(Long id) {
+        Log.d("Pref", "saveAdaptPosition: ");
+        editor = preferences.edit();
+        editor.putString(ADAPT, String.valueOf(id));
         editor.commit();
     }
 }
