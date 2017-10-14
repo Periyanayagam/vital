@@ -26,6 +26,7 @@ public class BaseActivity extends AppCompatActivity implements ResponseListener 
     @Override
     public void onFailure(Throwable paramThrowable, int paramInt) {
         Log.d(TAG, "onFailure: ");
+        Toast.makeText(this, paramThrowable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
     }
 

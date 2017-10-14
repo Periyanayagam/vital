@@ -28,11 +28,13 @@ public class SalesDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent coldcall = new Intent(SalesDashboardActivity.this,ColdCallActivity.class);
+                Intent coldcall = new Intent(SalesDashboardActivity.this,ColdCallsviewActivity.class);
                 coldcall.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(coldcall);
             }
         });
+
+
 
         linear_followupcall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +55,10 @@ public class SalesDashboardActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void logoutClicked(View v){
+        startActivity(new Intent(SalesDashboardActivity.this, LoginActivity.class));
+        finish();
     }
 }

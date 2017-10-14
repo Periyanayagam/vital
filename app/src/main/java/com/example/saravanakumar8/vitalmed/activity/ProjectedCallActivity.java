@@ -1,21 +1,38 @@
 package com.example.saravanakumar8.vitalmed.activity;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
+import com.activeandroid.query.Select;
+import com.example.saravanakumar8.vitalmed.Response.follow.FollowResponse;
+import com.example.saravanakumar8.vitalmed.Rest.ApiClient;
+import com.example.saravanakumar8.vitalmed.Rest.ApiInterface;
+import com.example.saravanakumar8.vitalmed.Rest.ResponseListener;
+import com.example.saravanakumar8.vitalmed.Rest.RetroFitUtils;
+import com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel;
+import com.example.saravanakumar8.vitalmed.adapter.FollowupCallAdapter;
 import com.example.saravanakumar8.vitalmed.model.Datamodel;
 import com.example.saravanakumar8.vitalmed.adapter.ProjectedCallAdapter;
 import com.example.saravanakumar8.vitalmed.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ProjectedCallActivity extends AppCompatActivity {
+import retrofit2.Call;
 
-    RecyclerView recycle_projectedcall;
+public class ProjectedCallActivity extends AppCompatActivity implements ResponseListener {
 
-    ProjectedCallAdapter projectedCallAdapter;
+    private static final String TAG = FollowupCallActivity.class.getSimpleName();
+    RecyclerView recycle_followupcall;
+
+    FollowupCallAdapter followupCallAdapter;
+
+    ProgressDialog mProgressDialog;
 
     // ArrayList<Datamodel> data;
 
@@ -35,36 +52,88 @@ public class ProjectedCallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projected_call);
 
-        recycle_projectedcall = (RecyclerView) findViewById(R.id.recycle_projectedcall);
-        recycle_projectedcall.setHasFixedSize(true);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait...");
+        mProgressDialog.show();
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call localCall = apiInterface.initSync("2", "9");
+        //Call localCall = apiInterface.initSync(Pref.getUSERID(), Pref.getGROUPID());
+        RetroFitUtils.getInstance().retrofitEnqueue(localCall, this, 0);
+
+        recycle_followupcall = (RecyclerView) findViewById(R.id.recycle_projectedcall);
+        recycle_followupcall.setHasFixedSize(true);
 
         //Recyclerview Init
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recycle_projectedcall.setLayoutManager(layoutManager);
+        recycle_followupcall.setLayoutManager(layoutManager);
 
+        prepareData();
 
-        ArrayList<Datamodel> coldcall = prepareData();
-
-
-        projectedCallAdapter = new ProjectedCallAdapter(ProjectedCallActivity.this, coldcall);
-        recycle_projectedcall.setAdapter(projectedCallAdapter);
 
     }
 
-    private ArrayList<Datamodel> prepareData() {
-        ArrayList<Datamodel> android_version = new ArrayList<>();
-        for (int i = 0; i < hospitalname.length; i++) {
-            Datamodel datamodel = new Datamodel();
-            datamodel.setHospitalname(hospitalname[i]);
-            datamodel.setDoctorname(doctoname[i]);
-            datamodel.setMobilename(mobilename[i]);
-            datamodel.setAttendername(attendername[i]);
-            datamodel.setDate(date[i]);
-            datamodel.setStatus(status[i]);
-            datamodel.setImages(images[i]);
-            android_version.add(datamodel);
+    private void prepareData() {
+        List<Coldmodel> myList = new Select()
+                .from(Coldmodel.class)
+                .execute();
+
+        setAdapter(myList);
+
+    }
+
+    private void setAdapter(List<Coldmodel> followList) {
+
+        if (followupCallAdapter == null) {
+            followupCallAdapter = new FollowupCallAdapter(this, followList);
+            recycle_followupcall.setAdapter(followupCallAdapter);
+        } else {
+            followupCallAdapter.refresh(followList);
         }
-        return android_version;
+
+    }
+
+    @Override
+    public void onFailure(Throwable paramThrowable, int paramInt) {
+
+    }
+
+    @Override
+    public void onSuccess(String paramString, int paramInt) {
+        mProgressDialog.dismiss();
+        Log.d(TAG, "onSuccess: " + paramString);
+
+        switch (paramInt) {
+            case 0:
+                ArrayList<Datamodel> coldcall = new ArrayList<>();
+                Gson gson = new Gson();
+
+                Log.d(TAG, "onSuccess: " + paramString);
+
+                FollowResponse syncResponse = (gson.fromJson(paramString, FollowResponse.class));
+                Log.d(TAG, "onSuccess: MainActivity" + syncResponse.getServiceList().get(0).getStatus());
+
+                for (int i = 0; i < syncResponse.getServiceList().size(); i++) {
+                    coldcall.add(new Datamodel(syncResponse.getServiceList().get(i).getCustomer_name(),
+                            syncResponse.getServiceList().get(i).getEng_name(),
+                            syncResponse.getServiceList().get(i).getEquip_name(),
+                            syncResponse.getServiceList().get(i).getCreated_dt(),
+                            syncResponse.getServiceList().get(i).getStatus()
+                    ));
+                }
+
+
+                /*followupCallAdapter = new FollowupCallAdapter(FollowupCallActivity.this, coldcall);
+                recycle_followupcall.setAdapter(followupCallAdapter);*/
+
+                break;
+        }
+
+
+    }
+
+    @Override
+    public void showErrorDialog(String paramString, int anInt, int paramInt) {
 
     }
 }

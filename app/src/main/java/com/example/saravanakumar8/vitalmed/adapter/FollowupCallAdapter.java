@@ -11,9 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.saravanakumar8.vitalmed.R;
+import com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel;
 import com.example.saravanakumar8.vitalmed.model.Datamodel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saravanakumar8 on 9/9/2017.
@@ -22,9 +24,9 @@ import java.util.ArrayList;
 public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<Datamodel> coldcall;
+    List<Coldmodel> coldcall;
 
-    public FollowupCallAdapter(Context context, ArrayList<Datamodel> coldcall) {
+    public FollowupCallAdapter(Context context, List<Coldmodel> coldcall) {
         this.context = context;
         this.coldcall = coldcall;
 
@@ -34,7 +36,7 @@ public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.followcall_list, parent, false);
+                .inflate(R.layout.coldcall_list, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -43,12 +45,12 @@ public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapte
 
         Log.d("Adapter", "onBindViewHolder: "+ coldcall.get(0).getStatus());
 
-        holder.txt_hospitaname.setText(coldcall.get(position).getHospitalname());
-        holder.txt_doctorname.setText(coldcall.get(position).getDoctorname());
-        holder.txt_mobilename.setText(coldcall.get(position).getMobilename());
-        holder.txt_date.setText(coldcall.get(position).getDate());
-        holder.txt_status.setText(coldcall.get(position).getStatus());
-
+        holder.txtName.setText(coldcall.get(position).getCustomer_name());
+        holder.txtEngName.setText(coldcall.get(position).getEng_name());
+        holder.txtMobile.setText(coldcall.get(position).getContact_no());
+        holder.txtProblem.setText(coldcall.get(position).getProblem());
+        holder.txtDate.setText(coldcall.get(position).getCreated_dt());
+        holder.txtStatus.setText(coldcall.get(position).getStatus());
       //  holder.img_success.setImageResource(coldcall.get(position).getImages());
     }
 
@@ -59,11 +61,14 @@ public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapte
         return coldcall.size();
     }
 
+    public void refresh(List<Coldmodel> followList) {
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txt_hospitaname, txt_doctorname, txt_mobilename, txt_attendername, txt_date, txt_status;
-        LinearLayout linear_coldcalldetail;
-
+        TextView txtName, txtEngName, txtMobile, txtProblem, txtDate, txtStatus;
+        LinearLayout linear_coldcalldetail, rootLay;
 
         ImageView img_success;
 
@@ -71,12 +76,13 @@ public class FollowupCallAdapter extends RecyclerView.Adapter<FollowupCallAdapte
             super(itemView);
 
 
-            txt_hospitaname = (TextView) itemView.findViewById(R.id.txtName);
-            txt_doctorname = (TextView) itemView.findViewById(R.id.txtType);
-            txt_mobilename = (TextView) itemView.findViewById(R.id.txtProblem);
-            txt_attendername = (TextView) itemView.findViewById(R.id.txtEngName);
-            txt_date = (TextView) itemView.findViewById(R.id.txtDate);
-            txt_status = (TextView) itemView.findViewById(R.id.txtStatus);
+            txtName = (TextView) itemView.findViewById(R.id.txtName);
+            txtEngName = (TextView) itemView.findViewById(R.id.txtEngName);
+            txtMobile = (TextView) itemView.findViewById(R.id.txtMobile);
+            txtProblem = (TextView) itemView.findViewById(R.id.txtProblem);
+            txtDate = (TextView) itemView.findViewById(R.id.txtDate);
+            txtStatus = (TextView) itemView.findViewById(R.id.txtStatus);
+            img_success = (ImageView) itemView.findViewById(R.id.img_success);
             img_success = (ImageView) itemView.findViewById(R.id.img_success);
 
             linear_coldcalldetail = (LinearLayout) itemView.findViewById(R.id.linear_coldcalldetail);

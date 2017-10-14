@@ -7,17 +7,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.saravanakumar8.vitalmed.model.Datamodel;
+import com.activeandroid.Model;
+import com.activeandroid.query.Select;
 import com.example.saravanakumar8.vitalmed.R;
 import com.example.saravanakumar8.vitalmed.Response.follow.FollowResponse;
 import com.example.saravanakumar8.vitalmed.Rest.ApiClient;
 import com.example.saravanakumar8.vitalmed.Rest.ApiInterface;
 import com.example.saravanakumar8.vitalmed.Rest.ResponseListener;
 import com.example.saravanakumar8.vitalmed.Rest.RetroFitUtils;
+import com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel;
 import com.example.saravanakumar8.vitalmed.adapter.FollowupCallAdapter;
+import com.example.saravanakumar8.vitalmed.model.Datamodel;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 
@@ -65,23 +69,29 @@ public class FollowupCallActivity extends AppCompatActivity implements ResponseL
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recycle_followupcall.setLayoutManager(layoutManager);
 
+        prepareData();
+
 
     }
 
-    private ArrayList<Datamodel> prepareData() {
-        ArrayList<Datamodel> android_version = new ArrayList<>();
-        for (int i = 0; i < hospitalname.length; i++) {
-            Datamodel datamodel = new Datamodel();
-            datamodel.setHospitalname(hospitalname[i]);
-            datamodel.setDoctorname(doctoname[i]);
-            datamodel.setMobilename(mobilename[i]);
-            datamodel.setAttendername(attendername[i]);
-            datamodel.setDate(date[i]);
-            datamodel.setStatus(status[i]);
-            datamodel.setImages(images[i]);
-            android_version.add(datamodel);
+    private void prepareData() {
+        List<Coldmodel> myList = new Select()
+                .from(Coldmodel.class)
+                .execute();
+
+        setAdapter(myList);
+
+    }
+
+    private void setAdapter(List<Coldmodel> followList) {
+
+        if (followupCallAdapter == null) {
+            followupCallAdapter = new FollowupCallAdapter(this, followList);
+            recycle_followupcall.setAdapter(followupCallAdapter);
+        } else {
+            followupCallAdapter.refresh(followList);
         }
-        return android_version;
+
     }
 
     @Override
@@ -114,8 +124,8 @@ public class FollowupCallActivity extends AppCompatActivity implements ResponseL
                 }
 
 
-                followupCallAdapter = new FollowupCallAdapter(FollowupCallActivity.this, coldcall);
-                recycle_followupcall.setAdapter(followupCallAdapter);
+                /*followupCallAdapter = new FollowupCallAdapter(FollowupCallActivity.this, coldcall);
+                recycle_followupcall.setAdapter(followupCallAdapter);*/
 
                 break;
         }

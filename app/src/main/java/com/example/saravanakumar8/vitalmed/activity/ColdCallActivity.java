@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
@@ -54,6 +55,10 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
 
     }
 
+    public void logoutClicked(View v){
+        startActivity(new Intent(ColdCallActivity.this, LoginActivity.class));
+    }
+
     @Override
     public void onFailure(Throwable paramThrowable, int paramInt) {
 
@@ -71,7 +76,6 @@ public class ColdCallActivity extends BaseActivity implements ResponseListener, 
                 new Delete().from(Coldmodel.class).execute();
 
                 Log.d(TAG, "onSuccess: Deleted");
-
 
                 Gson gson = new Gson();
 

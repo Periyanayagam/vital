@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.activeandroid.query.Update;
 import com.example.saravanakumar8.vitalmed.R;
 import com.example.saravanakumar8.vitalmed.activeandroid.Coldmodel;
 
@@ -89,9 +88,33 @@ public class ColdCallsviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d("ColdCallActivity", "onClick: " + crapList.get(5));
+                if (mChkBox.isChecked()) {
+                    Coldmodel coldmodel = new Coldmodel();
+                    coldmodel.setRequest_id(mEtReqID.getText().toString());
+                    coldmodel.setCustomer_name(mEtCustName.getText().toString());
+                    coldmodel.setContact_no(mEtMobile.getText().toString());
+                    coldmodel.setEid(mEtEid.getText().toString());
+                    coldmodel.setEquip_name(mEtEqName.getText().toString());
+                    coldmodel.setEquip_sl_no(mEtEqSlNo.getText().toString());
+                    coldmodel.setContact_no(mEtContract.getText().toString());
+                    coldmodel.setSr_type(mEtSrType.getText().toString());
+                    coldmodel.setEng_name(mEtEngName.getText().toString());
+                    coldmodel.setStatus(mEtStatus.getText().toString());
+                    coldmodel.setProblem(mEtProblem.getText().toString());
+                    coldmodel.save();
+                    Log.d(TAG, "onClick: saved");
+                    doClose();
+                }else{
 
-                String updateSet = " request_id = ? ," +
+                }
+
+                //   Log.d("ColdCallActivity", "onClick: " + crapList.get(5));
+
+
+
+
+
+               /* String updateSet = " request_id = ? ," +
                         " customer_name = ? ," +
                         "contact_no = ? ," +
                         "eid = ? ," +
@@ -117,11 +140,11 @@ public class ColdCallsviewActivity extends AppCompatActivity {
                                 mEtEngName.getText().toString().trim(),
                                 mEtProblem.getText().toString().trim(),
                                 mEtStatus.getText().toString().trim()
-                                )
+                        )
                         .where("id = ? ", Long.parseLong(crapList.get(11)))
                         .execute();
+*/
 
-                doClose();
             }
         });
 

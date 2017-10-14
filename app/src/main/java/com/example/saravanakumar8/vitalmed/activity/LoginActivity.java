@@ -71,7 +71,7 @@ public class LoginActivity extends BaseActivity implements ResponseListener {
 
     private void doLogin() {
 
-        mProgressDialog.setTitle("Login");
+        mProgressDialog.setTitle("Logging In");
         mProgressDialog.setMessage("Please wait...");
         mProgressDialog.show();
 
@@ -82,6 +82,11 @@ public class LoginActivity extends BaseActivity implements ResponseListener {
 
     }
 
+    @Override
+    public void onFailure(Throwable paramThrowable, int paramInt) {
+        super.onFailure(paramThrowable, paramInt);
+        mProgressDialog.dismiss();
+    }
 
     @Override
     public void onSuccess(String paramString, int paramInt) {
@@ -96,10 +101,11 @@ public class LoginActivity extends BaseActivity implements ResponseListener {
 
         if (loginResponseModel.getStatus().equals("1")) {
             showMessage("Logged in Successfully");
-            Intent login = new Intent(LoginActivity.this, DashboardActivity.class);
+            Intent login = new Intent(LoginActivity.this, SalesDashboardActivity.class);
             login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             Pref.savelogin(edt_username.getText().toString().trim(),edt_password.getText().toString().trim(), loginResponseModel.getUserid(), loginResponseModel.getGroupid());
             startActivity(login);
+            finish();
         } else {
             showMessage("Invalid Login");
         }
